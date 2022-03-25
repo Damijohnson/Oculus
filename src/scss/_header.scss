@@ -1,0 +1,65 @@
+header {
+  .header-inner {
+    padding: 45px;
+    margin: auto;
+    max-width: 1600px;
+  }
+
+  a.logo {
+    svg {
+      width: 144px;
+    }
+  }
+
+  nav {
+    ul {
+      li {
+        padding: 0 30px;
+
+        a {
+          font-size: rem(14);
+          color: #000;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  ul.header-links {
+    li {
+      a {
+        padding: 20px;
+
+        svg {
+          width: 20px;
+        }
+      }
+    }
+  }
+
+  .header-alert {
+    color: #fff;
+    padding: 18px;
+    font-size: rem(10);
+    text-align: center;
+    font-stretch: normal;
+    letter-spacing: 1px;
+    background-color: $secondary-color;
+
+    a {
+      color: inherit;
+      font-size: rem(11);
+      font-stretch: inherit;
+      letter-spacing: inherit;
+      text-decoration: underline;
+    }
+
+    p {
+      font-size: inherit;
+      font-stretch: inherit;
+      letter-spacing: inherit;
+      margin-bottom: 0;
+    }
+  }
+}

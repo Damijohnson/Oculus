@@ -1,0 +1,53 @@
+section {
+
+}
+
+section#section_banner {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  text-align: center;
+
+  p {
+    font-weight: 600;
+    font-size: 23px;
+    max-width: 615px;
+    line-height: 1.2;
+    margin: 0 auto 60px;
+    text-transform: uppercase;
+  }
+
+  a {
+    display: block;
+  }
+
+  .primary-button {
+    margin-right: 50px;
+  }
+}
+
+section#section_media {
+  margin: 0 80px;
+  max-width: 1800px;
+
+  img {
+
+  }
+
+  video {
+    width: 100%;
+  }
+
+  h2.section_media-heading {
+    margin: 0 auto 60px;
+    text-align: center;
+    max-width: 800px;
+
+    .long-line {
+      height: 6px;
+      width: 50px;
+      display: inline-block;
+      vertical-align: middle;
+      background-color: $secondary-color;
+    }
+  }
+}

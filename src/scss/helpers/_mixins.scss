@@ -1,0 +1,207 @@
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin svg($filename_sans_ext, $background_size) {
+  background-image: url('../img/svg/#{$filename_sans_ext}.svg');
+  background-size: $background_size;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+@mixin force_svg($filename_sans_ext, $background_size) {
+  background-image: url('../images/svg/#{$filename_sans_ext}.svg') !important;
+  background-size: $background_size;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+@mixin image($filename_sans_ext, $ext, $background_size, $makeImportant: false) {
+  $file: '#{$filename_sans_ext}.#{$ext}';
+  $file2x: '#{$filename_sans_ext}@2x.#{$ext}';
+  @if ($makeImportant == true) {
+    background-image: url('../img/#{$file}') !important;
+  } @else {
+    background-image: url('../img/#{$file}');
+  }
+  background-size: $background_size;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @media #{$retina} {
+    @if ($makeImportant == true) {
+      background-image: url('../img/#{$file2x}') !important;
+    } @else {
+      background-image: url('../img/#{$file2x}');
+    }
+  }
+}
+
+@mixin make_responsive($selector, $list_media-value, $offset: "", $makeImportant: false) {
+  @each $media-value in $list_media-value {
+    $media: "";
+    $value: "";
+    $one_time_only: false;
+    @if length($media-value) == 1 { //items are in $list_media_value not $media-value
+      $media: nth($list_media-value, 1);
+      $value: nth($list_media-value, 2);
+      $one_time_only: true;
+    } @else {
+      $media: nth($media-value, 1);
+      $value: nth($media-value, 2);
+    }
+    $value: if($offset == "" or $offset == 0, $value, $value + $offset);
+    $value: if($makeImportant, $value !important, $value);
+    @if $media == $normal {
+      #{$selector}: $value;
+    } @else {
+      @media #{$media}  {
+        #{$selector}: $value;
+      }
+    }
+    @if ($one_time_only) {
+      @break ;
+    }
+  }
+}
+
+//border-radius mixins
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+  background-clip: padding-box; /* stops bg color from leaking outside the border: */
+}
+
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+@mixin box-shadow-dual($shadow) {
+  -webkit-box-shadow: $shadow, $shadow;
+  -moz-box-shadow: $shadow, $shadow;
+  box-shadow: $shadow, $shadow;
+}
+
+@mixin background_gradient($topColor,$bottomColor) {
+  background-image: -ms-linear-gradient(top, $topColor, $bottomColor);
+  background-color: $topColor;
+  background-image: -khtml-gradient(linear, left top, left bottom, from($topColor), to($bottomColor));
+  background-image: -moz-linear-gradient(top, $topColor, $bottomColor);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $topColor), color-stop(100%, $bottomColor));
+  background-image: -webkit-linear-gradient(center, $topColor, $bottomColor);
+  background-image: -o-linear-gradient(top, $topColor, $bottomColor);
+  background-image: linear-gradient(top, $topColor, $bottomColor);
+}
+
+@mixin transition($val) {
+  -webkit-transition: $val;
+  -moz-transition: $val;
+  -ms-transition: $val;
+  -o-transition: $val;
+  transition: $val;
+}
+
+@mixin transform($value) {
+  -webkit-transform: $value;
+  -moz-transform: $value;
+  -ms-transform: $value;
+  -o-transform: $value;
+  transform: $value;
+}
+
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+//flexbox - parent
+@mixin flexbox($direction: null, $wrap: null, $justify: null, $align_items: null, $align_content: null, $inline: false, $media_query_reset: null) {
+  //flexbox($direction:row,$wrap:nowrap,$justify:flex-start,$align_items:flex-start,$align_content:flex-start,$display:flex)
+  /* References:
+   * https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+   * http://ptb2.me/flexbox/
+   */
+
+  // display: flex; /* or inline-flex */
+  @if $inline == true {
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+  } @else {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  @if $direction and $wrap {
+    -webkit-flex-flow: $direction $wrap;
+    flex-flow: $direction $wrap; //default: row nowrap
+  } @else if $direction {
+    -webkit-flex-direction: $direction;
+    flex-direction: $direction; //row (default) | row-reverse | column | column-reverse
+  } @else if $wrap {
+    -webkit-flex-wrap: $wrap;
+    flex-wrap: $wrap; //nowrap (default) | wrap | wrap-reverse
+  }
+
+  @if $justify { //alignment of items -> flex-direction row: horizontal / col: vertical
+    -webkit-justify-content: $justify;
+    justify-content: $justify; //flex-start (default) | flex-end | center | space-between | space-around
+  }
+
+  @if $align_items { //alignment for items -> flex-direction row: vertical / col: horizontal
+    -webkit-align-items: $align_items;
+    align-items: $align_items; //flex-start | flex-end | center | baseline | stretch (default)
+  }
+
+  @if $align_content { //spacing for rows -> flex-direction row: vertical / col: horizontal
+    -webkit-align-content: $align_content;
+    align-content: $align_content; //flex-start | flex-end | center | space-between | space-around | stretch (default)
+    //Note: this property has no effect when flex-wrap:nowrap
+  }
+
+  html.lt-ie10 & {
+    display: block;
+
+    > * {
+      @if $direction == column or $direction == column-reverse {
+        display: block;
+      } @else {
+        display: inline-block;
+      }
+    }
+  }
+
+  @if $media_query_reset {
+    @media #{$media_query_reset} {
+      display: block;
+      @if $justify {
+        justify-content: initial;
+      }
+      @if $align_items {
+        align-items: initial;
+      }
+      @if $align_content {
+        align-content: initial;
+      }
+    }
+  }
+}
+
+@function rem($value) {
+  $rem: calc($value / 16) + rem;
+  @return $rem;
+}

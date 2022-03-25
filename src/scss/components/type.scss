@@ -1,0 +1,26 @@
+$primary-color: #1d65c1;
+$secondary-color: #181a1b;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -1px;
+  margin-bottom: 40px;
+  color: $secondary-color;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: rem(100);
+  font-stretch: expanded;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: rem(50);
+  font-stretch: normal;
+}
